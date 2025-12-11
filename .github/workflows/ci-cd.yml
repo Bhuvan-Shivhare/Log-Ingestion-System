@@ -30,6 +30,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: |
             ${{ secrets.DOCKER_USERNAME }}/logs-backend:latest
@@ -40,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
+          file: ./frontend/Dockerfile
           build-args: |
             NEXT_PUBLIC_API_URL=${{ env.PROD_API_URL }}
           push: true
