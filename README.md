@@ -8,10 +8,10 @@ This system simulates real-world distributed logging pipelines used in companies
 
 [![Demo Video]](https://drive.google.com/file/d/1ezY5iY3yN9hr-pu9mjW-nbHuwSP6gwYn/view?usp=sharing)
 
-#DEMO PHOTOS
-<img width="1436" height="715" alt="Screenshot 2025-12-11 at 11 37 40 PM" src="https://github.com/user-attachments/assets/0b389c18-6a33-449b-b03c-9e04ffc53cdf" />
+# DEMO PHOTOS
+<img width="1000" height="600" alt="Screenshot 2025-12-11 at 11 37 40 PM" src="https://github.com/user-attachments/assets/0b389c18-6a33-449b-b03c-9e04ffc53cdf" />
 
-  <img width="1440" height="816" alt="Screenshot 2025-12-11 at 11 37 24 PM" src="https://github.com/user-attachments/assets/6c1ec757-b22b-4438-94b6-0d01cd976ff2" />
+  <img width="1000" height="600" alt="Screenshot 2025-12-11 at 11 37 24 PM" src="https://github.com/user-attachments/assets/6c1ec757-b22b-4438-94b6-0d01cd976ff2" />
 
 
 ---
