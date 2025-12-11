@@ -48,25 +48,6 @@ This system simulates real-world distributed logging pipelines used in companies
 - Works with Minikube / Docker Desktop Kubernetes / Cloud (GKE, EKS, DO)
 
 ---
-
-# 🏗️ System Architecture
-
-flowchart TD
-    A[User] --> B[Frontend (Next.js)\nPort 3001]
-    B --> C[Backend (Express)\nPort 3000]
-    C --> D[MongoDB Atlas]
-    C --> E[Auth Service]
-    C --> F[Log Ingestion Service]
-
-    subgraph Kubernetes Cluster
-        B
-        C
-    end
-
-    subgraph External Services
-        D
-    end
-
 # 🏗️ System Architecture
 ```
 log-ingestion-system/
