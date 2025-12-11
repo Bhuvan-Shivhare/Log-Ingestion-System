@@ -6,7 +6,7 @@ This system simulates real-world distributed logging pipelines used in companies
 
 ## 🎥 Project Demo Video
 
-[![Demo Video](https://i.imgur.com/8RKXAIV.jpeg)](https://drive.google.com/file/d/1ezY5iY3yN9hr-pu9mjW-nbHuwSP6gwYn/view?usp=sharing)
+[![Demo Video]](https://drive.google.com/file/d/1ezY5iY3yN9hr-pu9mjW-nbHuwSP6gwYn/view?usp=sharing)
 
 
 ---
