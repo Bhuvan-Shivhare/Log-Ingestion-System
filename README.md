@@ -51,27 +51,21 @@ This system simulates real-world distributed logging pipelines used in companies
 
 # 🏗️ System Architecture
 
-```mermaid
-graph TD
-    User([👤 User / Browser])
-    Postman([🚀 Postman Client])
+flowchart TD
+    A[User] --> B[Frontend (Next.js)\nPort 3001]
+    B --> C[Backend (Express)\nPort 3000]
+    C --> D[MongoDB Atlas]
+    C --> E[Auth Service]
+    C --> F[Log Ingestion Service]
 
-    subgraph "🌐 Application Cluster"
-        Frontend[🖥️ Next.js Frontend\n(Port 3001)]
-        Backend[⚙️ Node.js Backend API\n(Port 3000)]
+    subgraph Kubernetes Cluster
+        B
+        C
     end
 
-    subgraph "📦 Databases & Caching"
-        Redis[(⚡ Redis Cache)]
-        Mongo[(🍃 MongoDB Atlas)]
+    subgraph External Services
+        D
     end
-
-    User --> Frontend
-    Postman --> Backend
-    Frontend -->|HTTP API Calls| Backend
-    Backend -->|Cache Read/Write| Redis
-    Backend -->|Store Logs| Mongo
-```
 
 # 🏗️ System Architecture
 ```
