@@ -1,0 +1,11 @@
+{
+    "name": "log-ingestion-system",
+    "version": "1.0.0",
+    "description": "Root script to run full stack",
+    "scripts": {
+        "dev": "npx concurrently \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\""
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.0"
+    }
+}
