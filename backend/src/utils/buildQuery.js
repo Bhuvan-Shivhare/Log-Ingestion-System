@@ -14,8 +14,8 @@ const buildQuery = (query) => {
 
     const mongoQuery = {};
 
-    // Exact matches
-    if (level) mongoQuery.level = level;
+    // Exact matches (level is case-insensitive)
+    if (level) mongoQuery.level = { $regex: new RegExp(`^${level}$`, 'i') };
     if (resourceId) mongoQuery.resourceId = resourceId;
     if (traceId) mongoQuery.traceId = traceId;
     if (spanId) mongoQuery.spanId = spanId;
