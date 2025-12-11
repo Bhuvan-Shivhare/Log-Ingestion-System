@@ -1,9 +1,11 @@
+# .github/workflows/ci-cd.yml
 name: CI/CD Pipeline
 
 on:
   push:
     branches: [ "main" ]
 
+# Global env (update PROD_API_URL if needed)
 env:
   PROD_API_URL: http://api.production-domain.com # UPDATE THIS with your real domain
 
@@ -30,8 +32,8 @@ jobs:
           context: ./backend
           push: true
           tags: |
-            bhuvannnn/logs-backend:latest
-            bhuvannnn/logs-backend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/logs-backend:latest
+            ${{ secrets.DOCKER_USERNAME }}/logs-backend:${{ github.sha }}
 
       # Build & Push Frontend
       - name: Build and push Frontend
@@ -42,29 +44,43 @@ jobs:
             NEXT_PUBLIC_API_URL=${{ env.PROD_API_URL }}
           push: true
           tags: |
-            bhuvannnn/logs-frontend:latest
-            bhuvannnn/logs-frontend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/logs-frontend:latest
+            ${{ secrets.DOCKER_USERNAME }}/logs-frontend:${{ github.sha }}
 
-      # Setup K8s
+      # Setup kubectl (for deploy)
       - name: Set up kubectl
         uses: azure/setup-kubectl@v3
         with:
           version: 'latest'
 
+      # Deploy to Kubernetes (uses KUBECONFIG and MONGO_URL repository secrets)
       - name: Deploy to Kubernetes
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.KUBECONFIG }}
         run: |
+          # create kube config file from secret
+          if [ -z "$KUBECONFIG_CONTENT" ]; then
+            echo "KUBECONFIG secret is empty — skipping deploy step."
+            exit 0
+          fi
+
           mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+          echo "${KUBECONFIG_CONTENT}" > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
-          
-          # 1. Create Secret from GitHub Secret (Avoids committing real URL to file)
-          kubectl create secret generic backend-secrets \
-            --from-literal=MONGO_URL='${{ secrets.MONGO_URL }}' \
-            --dry-run=client -o yaml | kubectl apply -f -
-          
-          # 2. Update Manifests with Commit SHA (Optional, ensures specific version)
-          # sed -i "s|:latest|:${{ github.sha }}|g" k8s/backend-deployment.yaml
-          # sed -i "s|:latest|:${{ github.sha }}|g" k8s/frontend-deployment.yaml
+
+          # 1. Create Secret from GitHub Secret (MONGO_URL)
+          if [ -z "${{ secrets.MONGO_URL }}" ]; then
+            echo "MONGO_URL secret is not set — creating deployment without that secret."
+          else
+            kubectl create secret generic backend-secrets \
+              --from-literal=MONGO_URL='${{ secrets.MONGO_URL }}' \
+              --dry-run=client -o yaml | kubectl apply -f -
+          fi
+
+          # 2. (Optional) Update manifests to a specific image tag
+          # If you use :latest in manifests, uncomment the sed lines below to replace with the SHA tag.
+          # sed -i "s|logs-backend:latest|logs-backend:${{ github.sha }}|g" k8s/backend-deployment.yaml
+          # sed -i "s|logs-frontend:latest|logs-frontend:${{ github.sha }}|g" k8s/frontend-deployment.yaml
 
           # 3. Apply Deployments
           kubectl apply -f k8s/backend-deployment.yaml
