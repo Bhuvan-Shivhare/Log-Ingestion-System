@@ -11,6 +11,7 @@ This system simulates real-world distributed logging pipelines used in companies
 # DEMO PHOTOS
 # Login & Register
 <img width="1000" height="600" alt="Screenshot 2025-12-11 at 11 37 40 PM" src="https://github.com/user-attachments/assets/0b389c18-6a33-449b-b03c-9e04ffc53cdf" />
+
 # Dashboard
   <img width="1000" height="600" alt="Screenshot 2025-12-11 at 11 37 24 PM" src="https://github.com/user-attachments/assets/6c1ec757-b22b-4438-94b6-0d01cd976ff2" />
 
