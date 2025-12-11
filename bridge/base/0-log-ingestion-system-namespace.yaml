@@ -1,0 +1,8 @@
+#! 0-log-ingestion-system-namespace.yaml
+# Generated code, do not edit
+apiVersion: v1
+kind: Namespace
+metadata:
+    name: log-ingestion-system
+    labels:
+        com.docker.compose.project: log-ingestion-system

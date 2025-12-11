@@ -1,0 +1,46 @@
+#! backend-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: backend
+    namespace: log-ingestion-system
+    labels:
+        com.docker.compose.project: log-ingestion-system
+        com.docker.compose.service: backend
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: log-ingestion-system
+            com.docker.compose.service: backend
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: log-ingestion-system
+                com.docker.compose.service: backend
+                com.docker.compose.network.default: "true"
+        spec:
+            restartPolicy: Always
+            containers:
+                - name: backend
+                  image: bhuvannnn/logs-backend:latest
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: JWT_SECRET
+                      value: "1XBETAION87@Shiva@9070"
+                    - name: MONGO_URI
+                      value: "mongodb+srv://BhuvanDB1:Shiva8790@cluster0.itjfnoi.mongodb.net/?appName=Cluster0"
+                    - name: MONGO_URL
+                      value: "mongodb+srv://BhuvanDB1:Shiva8790@cluster0.itjfnoi.mongodb.net/?appName=Cluster0"
+                    - name: PORT
+                      value: "3000"
+                    - name: REDIS_URL
+                      value: "redis://redis:6379"
+                    - name: TOKEN_EXPIRY
+                      value: "1d"
+                  ports:
+                    - name: backend-3000
+                      containerPort: 3000

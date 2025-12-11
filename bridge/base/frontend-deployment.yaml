@@ -1,0 +1,36 @@
+#! frontend-deployment.yaml
+# Generated code, do not edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: frontend
+    namespace: log-ingestion-system
+    labels:
+        com.docker.compose.project: log-ingestion-system
+        com.docker.compose.service: frontend
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            com.docker.compose.project: log-ingestion-system
+            com.docker.compose.service: frontend
+    strategy:
+        type: Recreate
+    template:
+        metadata:
+            labels:
+                com.docker.compose.project: log-ingestion-system
+                com.docker.compose.service: frontend
+                com.docker.compose.network.default: "true"
+        spec:
+            restartPolicy: Always
+            containers:
+                - name: frontend
+                  image: bhuvannnn/logs-frontend:latest
+                  imagePullPolicy: IfNotPresent
+                  env:
+                    - name: NEXT_PUBLIC_API_URL
+                      value: "http://localhost:3000"
+                  ports:
+                    - name: frontend-3000
+                      containerPort: 3000
